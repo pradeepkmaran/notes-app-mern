@@ -1,22 +1,47 @@
 import React, { useState } from 'react';
 import TagInput from '../../components/Input/TagInput';
 import { MdClose } from 'react-icons/md';
+import { useAsyncError } from 'react-router-dom';
 
 
-const AddEditNotes = () => {
+const AddEditNotes = ({ noteData, type, onClose }) => {
 
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [tags, setTags] = useState([]);
 
-    const onClose= () => {
+    const [error, setError] = useState(null);
+
+    const addNewNote = async () => {
 
     };
 
-    return (
-        <div> 
+    const editNote = async () => {
 
-            <button className='' onClick={onClose}>
+    };
+
+    const handleAddNote = () => {
+        if(!title) {
+            setError("Please enter the title.");
+            return;
+        }
+        if(!content) {
+            setError("Please enter the content.");
+            return;
+        }
+        setError(null);
+
+        if(type === 'edit') {
+            editNote();
+        } else {
+            addNewNote();
+        }
+    }
+
+    return (
+        <div className='relative'> 
+
+            <button className='w-10 h-10 rounded-full flex items-center justify-center absolute -top-3 -right-3 hover:bg-slate-50' onClick={onClose}>
                 <MdClose className='text-xl text-slate-400'/>
             </button>
 
@@ -46,7 +71,9 @@ const AddEditNotes = () => {
                 <TagInput tags={tags} setTags={setTags} />
             </div>
 
-            <button className='btn-primary font-medium mt-5 p-3' onClick={() => {}}>ADD</button>
+            {error && <p className='text-red-500 text-xs pt-4'>{error}</p>}
+
+            <button className='btn-primary font-medium mt-5 p-3' onClick={handleAddNote}>ADD</button>
         </div>
     );
 }
