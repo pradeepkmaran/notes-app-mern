@@ -31,8 +31,6 @@ const Login = () => {
 
         // login api call
         try {
-            console.log("Stop 0");
-            console.log("Stop 1");
             const response = await axiosInstance.post("/login", {
                 email: email,
                 password: password,
@@ -43,7 +41,6 @@ const Login = () => {
                 localStorage.setItem("token", response.data.accessToken);
                 navigate("/dashboard");
             }
-            console.log("Stop 1");
         } catch(error) {
             // Handle login failure
             console.log(error);
